@@ -24,34 +24,52 @@ Show package and dataset information:
 IFC-Dataset info
 ```
 
-Download and extract the amodal mask version:
+List downloadable files:
 
 ```bash
-IFC-Dataset download --variant amodal --out ./data
+IFC-Dataset list
+```
+
+Download and extract the default mask version, `smallest`:
+
+```bash
+IFC-Dataset download --out ./data
+```
+
+The same command can be written explicitly:
+
+```bash
+IFC-Dataset download --mask smallest --out ./data
+```
+
+Download and extract a specific mask version:
+
+```bash
+IFC-Dataset download --mask amodal --out ./data
 ```
 
 Lowercase command is also supported:
 
 ```bash
-ifc-dataset download --variant original --out ./data
+ifc-dataset download --mask original --out ./data
 ```
 
 Download from a specific Hugging Face revision:
 
 ```bash
-IFC-Dataset download --variant amodal --out ./data --dataset-version v0.0.1
+IFC-Dataset download --mask amodal --out ./data --dataset-version v0.0.1
 ```
 
 Download without extraction:
 
 ```bash
-IFC-Dataset download --variant amodal --out ./data --no-extract
+IFC-Dataset download --mask amodal --out ./data --no-extract
 ```
 
 Force re-download and re-extraction:
 
 ```bash
-IFC-Dataset download --variant amodal --out ./data --force
+IFC-Dataset download --mask amodal --out ./data --force
 ```
 
 ## Supported Variants
@@ -61,12 +79,7 @@ IFC-Dataset download --variant amodal --out ./data --force
 | `original` | `mask/original.zip` |
 | `amodal` | `mask/amodal.zip` |
 | `smallest` | `mask/smallest.zip` |
-
-Every download also includes:
-
-```text
-mask/split.zip
-```
+| `split` | `mask/split.zip` |
 
 ## Data Source
 
@@ -95,4 +108,3 @@ Upload when ready:
 ```bash
 twine upload dist/*
 ```
-

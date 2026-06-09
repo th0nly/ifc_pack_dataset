@@ -1,7 +1,7 @@
 import argparse
 
 from . import version
-from .config import DEFAULT_REPO_ID, DEFAULT_REVISION, SPLIT_FILE, SUPPORTED_VARIANTS
+from .config import DEFAULT_REPO_ID, DEFAULT_REVISION, SUPPORTED_VARIANTS
 from .downloader import download_dataset
 
 
@@ -14,13 +14,13 @@ def build_parser():
 
     download_parser = subparsers.add_parser(
         "download",
-        help="Download a dataset variant and split files.",
+        help="Download one mask archive.",
     )
     download_parser.add_argument(
-        "--variant",
+        "--mask",
         choices=sorted(SUPPORTED_VARIANTS),
-        default="original",
-        help="Dataset mask variant to download.",
+        default="smallest",
+        help="Mask archive to download.",
     )
     download_parser.add_argument(
         "--out",
@@ -54,16 +54,23 @@ def build_parser():
         "info",
         help="Show package and dataset information.",
     )
+    subparsers.add_parser(
+        "list",
+        help="List downloadable dataset files.",
+    )
     return parser
+
+
+def _print_downloadable_files():
+    print("Available mask downloads:")
+    for mask, path in SUPPORTED_VARIANTS.items():
+        print(f"  {mask}: {path}")
 
 
 def _print_info():
     print(f"IFC-Dataset version: {version}")
     print(f"Default Hugging Face repo: {DEFAULT_REPO_ID}")
-    print("Supported variants:")
-    for variant, path in SUPPORTED_VARIANTS.items():
-        print(f"  {variant}: {path}")
-    print(f"Split file: {SPLIT_FILE}")
+    _print_downloadable_files()
 
 
 def main(argv=None):
@@ -74,9 +81,13 @@ def main(argv=None):
         _print_info()
         return 0
 
+    if args.command == "list":
+        _print_downloadable_files()
+        return 0
+
     if args.command == "download":
         download_dataset(
-            variant=args.variant,
+            mask=args.mask,
             out_dir=args.out,
             repo_id=args.repo_id,
             revision=args.revision,
@@ -91,4 +102,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
