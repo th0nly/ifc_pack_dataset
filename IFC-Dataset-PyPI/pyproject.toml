@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "IFC-Dataset"
+version = "0.0.1"
+description = "Command line downloader for the IFC Hugging Face dataset."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "IFC-Dataset Authors" }
+]
+dependencies = [
+  "huggingface_hub",
+  "tqdm",
+]
+keywords = ["IFC", "dataset", "huggingface", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.scripts]
+IFC-Dataset = "ifc_dataset.cli:main"
+ifc-dataset = "ifc_dataset.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
